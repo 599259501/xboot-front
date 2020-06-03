@@ -68,46 +68,6 @@
                   </FormItem>
                 </Form>
               </TabPane>
-              <TabPane :label="$t('mobileLogin')" name="mobile" icon="ios-phone-portrait">
-                <Form
-                  ref="mobileLoginForm"
-                  :model="form"
-                  :rules="rules"
-                  class="form"
-                  v-if="tabName=='mobile'"
-                >
-                  <FormItem prop="mobile">
-                    <Input
-                      v-model="form.mobile"
-                      prefix="ios-phone-portrait"
-                      size="large"
-                      clearable
-                      placeholder="请输入手机号"
-                    />
-                  </FormItem>
-                  <FormItem prop="code" :error="errorCode">
-                    <Row type="flex" justify="space-between">
-                      <Input
-                        v-model="form.code"
-                        prefix="ios-mail-outline"
-                        size="large"
-                        clearable
-                        placeholder="请输入短信验证码"
-                        :maxlength="6"
-                        class="input-verify"
-                      />
-                      <CountDownButton
-                        ref="countDown"
-                        @on-click="sendSmsCode"
-                        :autoCountDown="false"
-                        size="large"
-                        :loading="sending"
-                        :text="getSms"
-                      />
-                    </Row>
-                  </FormItem>
-                </Form>
-              </TabPane>
             </Tabs>
 
             <Row type="flex" justify="space-between" align="middle">
@@ -238,8 +198,7 @@ export default {
       initCaptcha().then(res => {
         this.loadingCaptcha = false;
         if (res.success) {
-          this.captchaId = res.result;
-          this.captchaImg = drawCodeImage + this.captchaId;
+          this.captchaImg = res.result;
         }
       });
     },
